@@ -1,21 +1,24 @@
-class Day03 {
-    fun main() {
-        fun part1(input: List<String>): Int {
-            return input.size
-        }
+fun main() {
 
-        fun part2(input: List<String>): Int {
-            return input.size
-        }
-
-        // test if implementation meets criteria from the description, like:
-        val testInput = readInput("Day01_test.txt")
-        check(part1(testInput) == 1)
-
-        val input = readInput("Day01.txt")
-        part1(input).println()
-        part2(input).println()
+    fun toPriority(c: Char): Int {
+        return "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(c) + 1
     }
+
+    fun part1(input: List<String>): Int {
+
+        val items = input.map { s -> Pair(s.substring(0, s.length /2), s.substring(s.length /2 )) }
+        val commonItems = items.map{ it.first.asIterable().intersect(it.second.asIterable()).first() }
+        val priorities = commonItems.map { toPriority(it) }
+        return priorities.sum()
+    }
+
+
+    // test if implementation meets criteria from the description, like:
+    val testInput = readInput("Day03_test")
+    check(part1(testInput) == 157)
+
+    val input = readInput("Day03")
+    println(part1(input))
 }
 
 /**
